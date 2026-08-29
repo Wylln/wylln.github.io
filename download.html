@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Baixar RustDesk | Suporte Remoto</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    }
+
+    :root {
+      --bg-dark: #0f172a;
+      --bg-card: #1e293b;
+      --accent-blue: #2563eb;
+      --accent-green: #10b981;
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --border-color: #334155;
+    }
+
+    body.light-theme {
+      --bg-dark: #f8fafc;
+      --bg-card: #ffffff;
+      --text-main: #0f172a;
+      --text-muted: #64748b;
+      --border-color: #e2e8f0;
+    }
+
+    body {
+      background-color: var(--bg-dark);
+      color: var(--text-main);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      padding: 1.5rem;
+      text-align: center;
+    }
+
+    .download-card {
+      background-color: var(--bg-card);
+      border: 1px solid var(--accent-blue);
+      box-shadow: 0 0 25px rgba(37, 99, 235, 0.35);
+      border-radius: 16px;
+      padding: 3rem 2rem;
+      max-width: 480px;
+      width: 100%;
+      position: relative;
+    }
+
+    /* Estilização para o ícone SVG centralizado */
+    .icon-box {
+      margin-bottom: 1rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .download-icon {
+      width: 56px;
+      height: 56px;
+      object-fit: contain;
+    }
+
+    h1 {
+      font-size: 1.8rem;
+      margin-bottom: 0.5rem;
+    }
+
+    p.subtitle {
+      color: var(--text-muted);
+      font-size: 1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .os-badge {
+      display: inline-block;
+      background-color: rgba(16, 185, 129, 0.15);
+      color: var(--accent-green);
+      border: 1px solid var(--accent-green);
+      padding: 0.4rem 1rem;
+      border-radius: 20px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      margin-bottom: 1.5rem;
+    }
+
+    .manual-link {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      margin-top: 1rem;
+    }
+
+    .manual-link a {
+      color: var(--accent-blue);
+      text-decoration: underline;
+      font-weight: 600;
+    }
+
+    .btn-back {
+      margin-top: 2rem;
+      display: inline-block;
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.9rem;
+      transition: color 0.2s;
+    }
+
+    .btn-back:hover {
+      color: var(--text-main);
+    }
+  </style>
+</head>
+<body>
+
+  <div class="download-card">
+    <div class="icon-box">
+      <img src="img/download.svg" alt="Download" class="download-icon">
+    </div>
+    <h1>Seu download começou!</h1>
+    <p class="subtitle">Apenas aguarde alguns segundos enquanto preparamos seu arquivo...</p>
+
+    <div id="os-badge" class="os-badge">✓ Verificando sistema...</div>
+
+    <div class="manual-link">
+      Se o download não iniciar automaticamente, <a id="rustdesk-link" href="#">clique aqui para baixar manualmente</a>.
+    </div>
+  </div>
+
+  <a href="index.html" class="btn-back">← Voltar para o site principal</a>
+
+ <script>
+  if (localStorage.getItem("theme") === "light") {
+    document.body.classList.add("light-theme");
+  }
+
+  const RUSTDESK_DOWNLOADS = {
+    win_x64: "https://github.com/rustdesk/rustdesk/releases/download/1.3.8/rustdesk-1.3.8-x86_64.exe",
+    win_arm: "https://github.com/rustdesk/rustdesk/releases/download/1.3.8/rustdesk-1.3.8-aarch64.exe",
+    mac: "https://github.com/rustdesk/rustdesk/releases/download/1.3.8/rustdesk-1.3.8-x86_64.dmg",
+    linux: "https://github.com/rustdesk/rustdesk/releases/download/1.3.8/rustdesk-1.3.8-x86_64.deb",
+    android: "https://github.com/rustdesk/rustdesk/releases/download/1.3.8/rustdesk-1.3.8-aarch64-signed.apk",
+    ios: "https://apps.apple.com/app/rustdesk-remote-desktop/id1602621242",
+    fallback: "https://github.com/rustdesk/rustdesk/releases/latest"
+  };
+
+  async function detectOS() {
+    const ua = window.navigator.userAgent.toLowerCase();
+
+    if (/android/i.test(ua)) return { key: "android", name: "Android" };
+    if (/iphone|ipad|ipod/i.test(ua)) return { key: "ios", name: "iOS" };
+    if (/mac/i.test(ua)) return { key: "mac", name: "macOS" };
+    if (/linux/i.test(ua)) return { key: "linux", name: "Linux" };
+
+    if (/win/i.test(ua)) {
+      // Checagem de arquitetura ARM64 para Windows
+      if (navigator.userAgentData && navigator.userAgentData.getHighEntropyValues) {
+        try {
+          const uaData = await navigator.userAgentData.getHighEntropyValues(["architecture"]);
+          if (uaData.architecture === "arm") {
+            return { key: "win_arm", name: "Windows (ARM64)" };
+          }
+        } catch (e) {
+          // Se falhar a consulta da API, prossegue para a verificação legada
+        }
+      }
+      if (ua.includes("arm64") || ua.includes("aarch64")) {
+        return { key: "win_arm", name: "Windows (ARM64)" };
+      }
+      return { key: "win_x64", name: "Windows (64-bit)" };
+    }
+
+    return { key: "fallback", name: "seu dispositivo" };
+  }
+
+  document.addEventListener("DOMContentLoaded", async () => {
+    const osInfo = await detectOS();
+    const downloadUrl = RUSTDESK_DOWNLOADS[osInfo.key] || RUSTDESK_DOWNLOADS.fallback;
+
+    const osBadge = document.getElementById("os-badge");
+    const link = document.getElementById("rustdesk-link");
+
+    osBadge.innerText = `✓ Versão identificada para ${osInfo.name}`;
+    link.href = downloadUrl;
+
+    // Dispara o download em segundo plano após 1.5s sem navegar para fora da página
+    setTimeout(() => {
+      const iframe = document.createElement("iframe");
+      iframe.style.display = "none";
+      iframe.src = downloadUrl;
+      document.body.appendChild(iframe);
+    }, 1500);
+  });
+</script>
+</body>
+</html>

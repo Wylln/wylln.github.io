@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Suporte em TI Remoto | Soluções Rápidas em Tecnologia</title>
+  <style>
+    /* Reset & Variáveis de Cores (Tema Escuro Padrão) */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    }
+
+    :root {
+      --bg-dark: #0f172a;
+      --bg-card: #1e293b;
+      --accent-blue: #2563eb;
+      --accent-green: #10b981;
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --border-color: #334155;
+      --header-bg: rgba(15, 23, 42, 0.9);
+    }
+
+    /* Estilos do Tema Claro */
+    body.light-theme {
+      --bg-dark: #f8fafc;
+      --bg-card: #ffffff;
+      --text-main: #0f172a;
+      --text-muted: #64748b;
+      --border-color: #e2e8f0;
+      --header-bg: rgba(248, 250, 252, 0.9);
+    }
+
+    body {
+      background-color: var(--bg-dark);
+      color: var(--text-main);
+      line-height: 1.6;
+      transition: background-color 0.3s ease, color 0.3s ease;
+    }
+
+    /* Header & Navegação */
+    header {
+      background-color: var(--header-bg);
+      backdrop-filter: blur(8px);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      border-bottom: 1px solid var(--border-color);
+      transition: background-color 0.3s ease, border-color 0.3s ease;
+    }
+
+    .nav-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 1.2rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .logo {
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: var(--text-main);
+    }
+
+    .logo span {
+      color: var(--accent-blue);
+    }
+
+    /* Estilo e Animação do Gradiente */
+    .gradient-name {
+      background: linear-gradient(135deg, var(--accent-blue), var(--accent-green), #3b82f6, var(--accent-green));
+      background-size: 300% 300%;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: gradientShift 4s ease infinite;
+      font-weight: 800;
+      display: inline-block;
+    }
+
+    @keyframes gradientShift {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    /* Contêiner das Ações/Botões do Header */
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    /* Botão Alternador de Tema */
+    .theme-toggle-btn {
+      background: transparent;
+      border: 1px solid var(--border-color);
+      color: var(--text-main);
+      padding: 0.5rem 0.9rem;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 0.9rem;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      transition: background-color 0.3s, border-color 0.3s, color 0.3s;
+    }
+
+    .theme-toggle-btn:hover {
+      border-color: var(--accent-blue);
+      background-color: rgba(37, 99, 235, 0.1);
+    }
+
+    .btn-contact {
+      background-color: var(--accent-blue);
+      color: #fff;
+      padding: 0.6rem 1.4rem;
+      border-radius: 6px;
+      text-decoration: none;
+      font-weight: 600;
+      transition: background 0.3s;
+    }
+
+    .btn-contact:hover {
+      background-color: #1d4ed8;
+    }
+
+    /* Hero Section */
+    .hero {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 4rem 2rem;
+      text-align: center;
+    }
+
+    .hero h1 {
+      font-size: 2.8rem;
+      margin-bottom: 1.2rem;
+      font-weight: 800;
+    }
+
+    .hero h1 span {
+      color: var(--accent-blue);
+    }
+
+    .hero p {
+      font-size: 1.2rem;
+      color: var(--text-muted);
+      max-width: 700px;
+      margin: 0 auto;
+    }
+
+    /* Ajuste de Posição e Efeito Hover Glow do Botão Principal */
+    .btn-whatsapp {
+      background-color: var(--accent-green);
+      color: #fff;
+      padding: 1rem 2.2rem;
+      border-radius: 10px;
+      text-decoration: none;
+      font-size: 1.1rem;
+      font-weight: 700;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      border: 1px solid transparent;
+      
+      /* Posição isolada */
+      position: relative;
+      top: 60px;
+      
+      transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
+    }
+
+    .btn-whatsapp:hover {
+      background-color: #059669;
+      border-color: var(--accent-green);
+      box-shadow: 0 0 18px rgba(16, 185, 129, 0.4);
+      transform: translateY(-2px);
+    }
+
+    /* Seção de Serviços */
+    .services {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 4rem 2rem;
+    }
+
+    .section-title {
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+
+    .section-title h2 {
+      font-size: 2rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .section-title p {
+      color: var(--text-muted);
+    }
+
+    .grid-services {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 2rem;
+    }
+
+    .card {
+      background-color: var(--bg-card);
+      padding: 2rem;
+      border-radius: 12px;
+      border: 1px solid var(--border-color);
+      transition: transform 0.3s, border-color 0.3s, background-color 0.3s;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+      border-color: var(--accent-blue);
+    }
+
+    .card-icon {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+    }
+
+    .card h3 {
+      font-size: 1.3rem;
+      margin-bottom: 0.8rem;
+    }
+
+    .card p {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+    }
+
+    /* Carrossel Infinito */
+    .carousel-section {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 2rem 2rem 4rem 2rem;
+      overflow: hidden;
+    }
+
+    .marquee-container {
+      width: 100%;
+      overflow: hidden;
+      white-space: nowrap;
+      position: relative;
+      padding: 1.5rem 0;
+      mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+      -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+    }
+
+    .marquee-track {
+      display: inline-flex;
+      gap: 1.8rem;
+      animation: marqueeScroll 25s linear infinite;
+    }
+
+    .marquee-track:hover {
+      animation-play-state: paused;
+    }
+
+    .marquee-item {
+      background-color: var(--bg-card);
+      border: 1px solid var(--border-color);
+      color: var(--text-main);
+      padding: 1rem 2rem;
+      border-radius: 12px;
+      font-weight: 600;
+      font-size: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.9rem;
+      flex-shrink: 0;
+      transition: border-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .marquee-item:hover {
+      border-color: var(--accent-blue);
+      transform: translateY(-3px);
+      box-shadow: 0 4px 20px rgba(37, 99, 235, 0.2);
+    }
+
+    .app-logo {
+      width: 28px;
+      height: 28px;
+      flex-shrink: 0;
+    }
+
+    @keyframes marqueeScroll {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+
+    /* Passo a Passo com Cartões */
+    .steps {
+      background-color: var(--bg-dark);
+      border-top: 1px solid var(--border-color);
+      border-bottom: 1px solid var(--border-color);
+      padding: 4rem 2rem;
+      transition: background-color 0.3s, border-color 0.3s;
+    }
+
+    .steps-container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .grid-steps {
+      display: flex;
+      gap: 1.5rem;
+      justify-content: center;
+      margin-top: 2.5rem;
+      flex-wrap: wrap;
+    }
+
+    /* Cartões individuais dos passos */
+    .step-card {
+      background-color: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 2.5rem 1.8rem;
+      flex: 1;
+      min-width: 280px;
+      max-width: 360px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      transition: border-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
+    }
+
+    /* Efeito Hover Iluminado nos Cartões (igual aos itens do carrossel) */
+    .step-card:hover {
+      border-color: var(--accent-blue);
+      box-shadow: 0 0 18px rgba(37, 99, 235, 0.35);
+      transform: translateY(-4px);
+    }
+
+    .step-number {
+      width: 48px;
+      height: 48px;
+      background-color: var(--accent-blue);
+      color: #fff;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 1.2rem;
+      margin-bottom: 1.2rem;
+    }
+
+    .step-card h3 {
+      font-size: 1.3rem;
+      margin-bottom: 0.8rem;
+    }
+
+    .step-card p {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      line-height: 1.5;
+    }
+
+    /* Botão interno do Passo 2 */
+    .btn-step-redirect {
+      margin-top: 1.5rem;
+      background-color: var(--accent-blue);
+      color: #fff;
+      padding: 0.75rem 1.5rem;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.95rem;
+      transition: background-color 0.3s, box-shadow 0.3s, transform 0.2s;
+    }
+
+    .btn-step-redirect:hover {
+      background-color: #1d4ed8;
+      box-shadow: 0 4px 12px rgba(37, 99, 235, 0.4);
+      transform: translateY(-1px);
+    }
+
+    /* Footer */
+    footer {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 3rem 2rem;
+      text-align: center;
+      color: var(--text-muted);
+      border-top: 1px solid var(--border-color);
+      transition: border-color 0.3s;
+    }
+
+    /* Responsividade */
+    @media (max-width: 768px) {
+      .hero h1 { font-size: 2rem; }
+      .hero p { font-size: 1rem; }
+      .nav-container { padding: 1rem; }
+      .nav-actions {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 1rem;
+      }
+      .grid-steps {
+        flex-direction: column;
+        align-items: center;
+      }
+      .step-card {
+        max-width: 100%;
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="nav-container">
+      <div class="logo">Suporte<span>TI</span> - Técnico <span class="gradient-name">WILLIAN COSTA</span></div>
+      
+      <div class="nav-actions">
+        <button id="theme-toggle" class="theme-toggle-btn" aria-label="Alternar tema">
+          <span id="theme-icon">🌙</span>
+          <span id="theme-text" class="theme-text">Escuro</span>
+        </button>
+        <a href="#contato" class="btn-contact">Atendimento</a>
+      </div>
+    </div>
+  </header>
+
+  <section class="hero">
+    <h1>Suporte Técnico Remoto <span>Rápido e Descomplicado</span></h1>
+    <p>Resolvemos problemas no seu computador, lentidão, remoção de vírus e configurações sem você precisar sair de casa.</p>
+    <a href="https://wa.me/+559681302228" target="_blank" rel="noopener noreferrer" class="btn-whatsapp" id="contato">
+      Solicitar Suporte Agora
+    </a>
+  </section>
+
+  <section class="services">
+    <div class="section-title">
+      <h2>O que posso resolver remotamente?</h2>
+      <p>Atendimento prático e seguro direto na sua máquina.</p>
+    </div>
+
+    <div class="grid-services">
+      <div class="card">
+        <div class="card-icon">🚀</div>
+        <h3>Otimização de Sistema</h3>
+        <p>Limpeza de arquivos temporários, aceleração de inicialização e correção de travamentos no Windows.</p>
+      </div>
+
+      <div class="card">
+        <div class="card-icon">🛡️</div>
+        <h3>Remoção de Vírus e Malware</h3>
+        <p>Verificação completa, eliminação de programas maliciosos e instalação de proteção básica.</p>
+      </div>
+      
+      <div class="card">
+        <div class="card-icon">💾</div>
+        <h3>Backup e Recuperação</h3>
+        <p>Criação de cópias de segurança de arquivos importantes e auxílio na recuperação de dados perdidos.</p>
+      </div>
+
+      <div class="card">
+        <div class="card-icon">🎮</div>
+        <h3>Otimização para Jogos</h3>
+        <p>Ajustes de desempenho no Windows, atualização de drivers e configuração para ganho de FPS.</p>
+      </div>
+
+      <div class="card">
+        <div class="card-icon">⚙️</div>
+        <h3>Instalação e Ajustes</h3>
+        <p>Configuração de impressoras, leitores PDF, navegadores, pacote Office e utilitários do dia a dia.</p>
+      </div>
+
+      <div class="card">
+        <div class="card-icon">🌐</div>
+        <h3>Diagnóstico de Rede</h3>
+        <p>Ajustes de conectividade, resolução de falhas na internet e navegação lenta.</p>
+      </div>
+    </div>
+  </section>
+  
+  <!-- Seção: Carrossel Infinito de Programas -->
+  <section class="carousel-section">
+    <div class="section-title">
+      <h2>Softwares e Ferramentas Prontas para Uso</h2>
+      <p>Instalação, configuração e otimização dos programas essenciais para o seu dia a dia.</p>
+    </div>
+
+    <div class="marquee-container">
+      <div class="marquee-track">
+        <!-- Bloco 1 -->
+        <div class="marquee-item">
+          <img src="img/adobereader.svg" alt="Adobe Reader" class="app-logo">
+          <span>Adobe Reader (PDF)</span>
+        </div>
+        <div class="marquee-item">
+          <img src="img/antivirus.svg" alt="Antivírus & Defender" class="app-logo">
+          <span>Antivírus & Defender</span>
+        </div>
+        <div class="marquee-item">
+          <img src="img/googlechrome.svg" alt="Google Chrome" class="app-logo">
+          <span>Google Chrome</span>
+        </div>
+        <div class="marquee-item">
+          <img src="img/microsoftteams.svg" alt="Microsoft Teams" class="app-logo">
+          <span>Microsoft Teams</span>
+        </div>
+        <div class="marquee-item">
+          <img src="img/microsoftoffice.svg" alt="Pacote Office" class="app-logo">
+          <span>Pacote Office</span>
+        </div>
+        <div class="marquee-item">
+          <img src="img/vlc.svg" alt="VLC Media Player" class="app-logo">
+          <span>VLC Media Player</span>
+        </div>
+        <div class="marquee-item">
+          <img src="img/whatsapp.svg" alt="WhatsApp Desktop" class="app-logo">
+          <span>WhatsApp Desktop</span>
+        </div>
+
+        <!-- Bloco 2 (Duplicado para efeito de loop infinito) -->
+        <div class="marquee-item">
+          <img src="img/adobereader.svg" alt="Adobe Reader" class="app-logo">
+          <span>Adobe Reader (PDF)</span>
+        </div>
+        <div class="marquee-item">
+          <img src="img/antivirus.svg" alt="Antivírus & Defender" class="app-logo">
+          <span>Antivírus & Defender</span>
+        </div>
+        <div class="marquee-item">
+          <img src="img/googlechrome.svg" alt="Google Chrome" class="app-logo">
+          <span>Google Chrome</span>
+        </div>
+        <div class="marquee-item">
+          <img src="img/microsoftteams.svg" alt="Microsoft Teams" class="app-logo">
+          <span>Microsoft Teams</span>
+        </div>
+        <div class="marquee-item">
+          <img src="img/microsoftoffice.svg" alt="Pacote Office" class="app-logo">
+          <span>Pacote Office</span>
+        </div>
+        <div class="marquee-item">
+          <img src="img/vlc.svg" alt="VLC Media Player" class="app-logo">
+          <span>VLC Media Player</span>
+        </div>
+        <div class="marquee-item">
+          <img src="img/whatsapp.svg" alt="WhatsApp Desktop" class="app-logo">
+          <span>WhatsApp Desktop</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Seção Como Funciona em Cartões -->
+  <section class="steps">
+    <div class="steps-container">
+      <div class="section-title">
+        <h2>Como Funciona o Atendimento?</h2>
+        <p>Apenas 3 passos simples para ter seu problema resolvido.</p>
+      </div>
+
+      <div class="grid-steps">
+        <div class="step-card">
+          <div class="step-number">1</div>
+          <h3>Contato Inicial</h3>
+          <p>Você me chama no WhatsApp e descreve o problema do computador.</p>
+        </div>
+
+        <div class="step-card">
+          <div class="step-number">2</div>
+          <h3>Acesso Seguro</h3>
+          <p>Baixe o programa de acesso remoto para permitir a conexão segura.</p>
+          <a href="download.html" class="btn-step-redirect">Ir para Download</a>
+        </div>
+
+        <div class="step-card">
+          <div class="step-number">3</div>
+          <h3>Problema Resolvido</h3>
+          <p>Acompanhe em tempo real a solução do seu problema na tela.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <p>&copy; 2026 Suporte em TI Remoto. Todos os direitos reservados.</p>
+  </footer>
+
+  <!-- Script: Alternância de Tema -->
+  <script>
+    const themeToggleBtn = document.getElementById("theme-toggle");
+    const themeIcon = document.getElementById("theme-icon");
+    const themeText = document.getElementById("theme-text");
+
+    const savedTheme = localStorage.getItem("theme");
+    
+    if (savedTheme === "light") {
+      document.body.classList.add("light-theme");
+      themeIcon.innerText = "☀️";
+      themeText.innerText = "Claro";
+    }
+
+    themeToggleBtn.addEventListener("click", () => {
+      document.body.classList.toggle("light-theme");
+      
+      const isLight = document.body.classList.contains("light-theme");
+      
+      if (isLight) {
+        themeIcon.innerText = "☀️";
+        themeText.innerText = "Claro";
+        localStorage.setItem("theme", "light");
+      } else {
+        themeIcon.innerText = "🌙";
+        themeText.innerText = "Escuro";
+        localStorage.setItem("theme", "dark");
+      }
+    });
+  </script>
+
+</body>
+</html>
