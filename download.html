@@ -3,19 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Baixar RustDesk | Suporte Remoto</title>
+  <title>Baixar RustDesk para PC | Suporte Remoto</title>
 
   <!-- Favicon corrigido para SVG -->
   <link rel="icon" type="image/svg+xml" href="img/favicon.svg">
 
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-    }
-    /* Restante do seu CSS permanece igual */
   <style>
     * {
       margin: 0;
@@ -29,6 +21,7 @@
       --bg-card: #1e293b;
       --accent-blue: #2563eb;
       --accent-green: #10b981;
+      --accent-amber: #f59e0b;
       --text-main: #f8fafc;
       --text-muted: #94a3b8;
       --border-color: #334155;
@@ -59,8 +52,8 @@
       border: 1px solid var(--accent-blue);
       box-shadow: 0 0 25px rgba(37, 99, 235, 0.35);
       border-radius: 16px;
-      padding: 3rem 2rem;
-      max-width: 480px;
+      padding: 2.8rem 2rem;
+      max-width: 520px;
       width: 100%;
       position: relative;
     }
@@ -88,6 +81,7 @@
       color: var(--text-muted);
       font-size: 1rem;
       margin-bottom: 1.5rem;
+      line-height: 1.5;
     }
 
     .os-badge {
@@ -95,23 +89,70 @@
       background-color: rgba(16, 185, 129, 0.15);
       color: var(--accent-green);
       border: 1px solid var(--accent-green);
-      padding: 0.4rem 1rem;
+      padding: 0.45rem 1.1rem;
       border-radius: 20px;
       font-size: 0.9rem;
       font-weight: 600;
       margin-bottom: 1.5rem;
     }
 
+    .os-badge.warning {
+      background-color: rgba(245, 158, 11, 0.15);
+      color: var(--accent-amber);
+      border-color: var(--accent-amber);
+    }
+
+    .instructions-box {
+      background-color: rgba(37, 99, 235, 0.08);
+      border: 1px solid var(--border-color);
+      border-radius: 10px;
+      padding: 1rem 1.2rem;
+      margin-bottom: 1.2rem;
+      font-size: 0.9rem;
+      color: var(--text-main);
+      line-height: 1.5;
+    }
+
+    .instructions-box strong {
+      color: var(--accent-blue);
+    }
+
     .manual-link {
       font-size: 0.88rem;
       color: var(--text-muted);
-      margin-top: 1rem;
+      margin-top: 0.8rem;
+      line-height: 1.5;
     }
 
     .manual-link a {
       color: var(--accent-blue);
       text-decoration: underline;
       font-weight: 600;
+    }
+
+    .desktop-options {
+      margin-top: 1.2rem;
+      padding-top: 1.2rem;
+      border-top: 1px solid var(--border-color);
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 0.6rem;
+    }
+
+    .desktop-options a {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      border: 1px solid var(--border-color);
+      padding: 0.35rem 0.75rem;
+      border-radius: 6px;
+      text-decoration: none;
+      transition: border-color 0.2s, color 0.2s;
+    }
+
+    .desktop-options a:hover {
+      border-color: var(--accent-blue);
+      color: var(--text-main);
     }
 
     .btn-back {
@@ -134,80 +175,131 @@
     <div class="icon-box">
       <img src="img/download.svg" alt="Download" class="download-icon">
     </div>
-    <h1>Seu download começou!</h1>
-    <p class="subtitle">Apenas aguarde alguns segundos enquanto preparamos seu arquivo...</p>
+    <h1 id="page-title">Seu download começou!</h1>
+    <p id="page-subtitle" class="subtitle">Apenas aguarde alguns segundos enquanto preparamos o instalador para o seu computador...</p>
 
     <div id="os-badge" class="os-badge">✓ Verificando sistema...</div>
 
-    <div class="manual-link">
+    <div class="instructions-box">
+      💡 <strong>Próximo passo:</strong> Após abrir o RustDesk no computador, envie o seu <strong>ID de 9 dígitos</strong> pelo WhatsApp para iniciar o atendimento.
+    </div>
+
+    <div id="manual-container" class="manual-link">
       Se o download não iniciar automaticamente, <a id="rustdesk-link" href="#">clique aqui para baixar manualmente</a>.
+    </div>
+
+    <div class="desktop-options" aria-label="Outras versões para computador">
+      <a id="link-win64" href="https://github.com/rustdesk/rustdesk/releases/download/1.3.8/rustdesk-1.3.8-x86_64.exe">Windows (64-bit)</a>
+      <a id="link-winarm" href="https://github.com/rustdesk/rustdesk/releases/download/1.3.8/rustdesk-1.3.8-aarch64.exe">Windows (ARM64)</a>
+      <a id="link-mac" href="https://github.com/rustdesk/rustdesk/releases/download/1.3.8/rustdesk-1.3.8-x86_64.dmg">macOS</a>
+      <a id="link-linux" href="https://github.com/rustdesk/rustdesk/releases/download/1.3.8/rustdesk-1.3.8-x86_64.deb">Linux (.deb)</a>
     </div>
   </div>
 
   <a href="index.html" class="btn-back">← Voltar para o site principal</a>
 
- <script>
-  if (localStorage.getItem("theme") === "light") {
-    document.body.classList.add("light-theme");
-  }
+  <script>
+    if (localStorage.getItem("theme") === "light") {
+      document.body.classList.add("light-theme");
+    }
 
-  const RUSTDESK_DOWNLOADS = {
-    win_x64: "https://github.com/rustdesk/rustdesk/releases/download/1.3.8/rustdesk-1.3.8-x86_64.exe",
-    win_arm: "https://github.com/rustdesk/rustdesk/releases/download/1.3.8/rustdesk-1.3.8-aarch64.exe",
-    mac: "https://github.com/rustdesk/rustdesk/releases/download/1.3.8/rustdesk-1.3.8-x86_64.dmg",
-    linux: "https://github.com/rustdesk/rustdesk/releases/download/1.3.8/rustdesk-1.3.8-x86_64.deb",
-    android: "https://github.com/rustdesk/rustdesk/releases/download/1.3.8/rustdesk-1.3.8-aarch64-signed.apk",
-    ios: "https://apps.apple.com/app/rustdesk-remote-desktop/id1602621242",
-    fallback: "https://github.com/rustdesk/rustdesk/releases/latest"
-  };
+    // Versões exclusivas para Computador (Desktop/Notebook) — Sem suporte mobile
+    const FALLBACK_VERSION = "1.3.8";
+    const RUSTDESK_DOWNLOADS = {
+      win_x64: `https://github.com/rustdesk/rustdesk/releases/download/${FALLBACK_VERSION}/rustdesk-${FALLBACK_VERSION}-x86_64.exe`,
+      win_arm: `https://github.com/rustdesk/rustdesk/releases/download/${FALLBACK_VERSION}/rustdesk-${FALLBACK_VERSION}-aarch64.exe`,
+      mac: `https://github.com/rustdesk/rustdesk/releases/download/${FALLBACK_VERSION}/rustdesk-${FALLBACK_VERSION}-x86_64.dmg`,
+      linux: `https://github.com/rustdesk/rustdesk/releases/download/${FALLBACK_VERSION}/rustdesk-${FALLBACK_VERSION}-x86_64.deb`,
+      fallback: "https://github.com/rustdesk/rustdesk/releases/latest"
+    };
 
-  async function detectOS() {
-    const ua = window.navigator.userAgent.toLowerCase();
+    // Atualiza dinamicamente para a versão mais recente do RustDesk se a API do GitHub responder rápido
+    async function refreshLatestDesktopUrls() {
+      try {
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), 1200);
+        const res = await fetch("https://api.github.com/repos/rustdesk/rustdesk/releases/latest", {
+          signal: controller.signal
+        });
+        clearTimeout(timeoutId);
+        if (!res.ok) return;
+        const release = await res.json();
+        const ver = (release.tag_name || "").replace(/^v/, "");
+        if (!ver) return;
 
-    if (/android/i.test(ua)) return { key: "android", name: "Android" };
-    if (/iphone|ipad|ipod/i.test(ua)) return { key: "ios", name: "iOS" };
-    if (/mac/i.test(ua)) return { key: "mac", name: "macOS" };
-    if (/linux/i.test(ua)) return { key: "linux", name: "Linux" };
+        RUSTDESK_DOWNLOADS.win_x64 = `https://github.com/rustdesk/rustdesk/releases/download/${ver}/rustdesk-${ver}-x86_64.exe`;
+        RUSTDESK_DOWNLOADS.win_arm = `https://github.com/rustdesk/rustdesk/releases/download/${ver}/rustdesk-${ver}-aarch64.exe`;
+        RUSTDESK_DOWNLOADS.mac = `https://github.com/rustdesk/rustdesk/releases/download/${ver}/rustdesk-${ver}-x86_64.dmg`;
+        RUSTDESK_DOWNLOADS.linux = `https://github.com/rustdesk/rustdesk/releases/download/${ver}/rustdesk-${ver}-x86_64.deb`;
 
-    if (/win/i.test(ua)) {
-      // Checagem de arquitetura ARM64 para Windows
-      if (navigator.userAgentData && navigator.userAgentData.getHighEntropyValues) {
-        try {
-          const uaData = await navigator.userAgentData.getHighEntropyValues(["architecture"]);
-          if (uaData.architecture === "arm") {
-            return { key: "win_arm", name: "Windows (ARM64)" };
+        document.getElementById("link-win64").href = RUSTDESK_DOWNLOADS.win_x64;
+        document.getElementById("link-winarm").href = RUSTDESK_DOWNLOADS.win_arm;
+        document.getElementById("link-mac").href = RUSTDESK_DOWNLOADS.mac;
+        document.getElementById("link-linux").href = RUSTDESK_DOWNLOADS.linux;
+      } catch (e) {
+        // Mantém os links da versão estável padrão (FALLBACK_VERSION)
+      }
+    }
+
+    async function detectOS() {
+      const ua = window.navigator.userAgent.toLowerCase();
+
+      // Bloqueia fluxo de download mobile (atendimento exclusivo para computadores)
+      if (/android|iphone|ipad|ipod|mobile/i.test(ua)) {
+        return { key: "mobile", name: "Dispositivo Móvel" };
+      }
+
+      if (/mac/i.test(ua)) return { key: "mac", name: "macOS" };
+      if (/linux/i.test(ua)) return { key: "linux", name: "Linux" };
+
+      if (/win/i.test(ua)) {
+        // Checagem de arquitetura ARM64 para Windows
+        if (navigator.userAgentData && navigator.userAgentData.getHighEntropyValues) {
+          try {
+            const uaData = await navigator.userAgentData.getHighEntropyValues(["architecture"]);
+            if (uaData.architecture === "arm") {
+              return { key: "win_arm", name: "Windows (ARM64)" };
+            }
+          } catch (e) {
+            // Se falhar a consulta da API, prossegue para a verificação legada
           }
-        } catch (e) {
-          // Se falhar a consulta da API, prossegue para a verificação legada
         }
+        if (ua.includes("arm64") || ua.includes("aarch64")) {
+          return { key: "win_arm", name: "Windows (ARM64)" };
+        }
+        return { key: "win_x64", name: "Windows (64-bit)" };
       }
-      if (ua.includes("arm64") || ua.includes("aarch64")) {
-        return { key: "win_arm", name: "Windows (ARM64)" };
-      }
+
       return { key: "win_x64", name: "Windows (64-bit)" };
     }
 
-    return { key: "fallback", name: "seu dispositivo" };
-  }
+    document.addEventListener("DOMContentLoaded", async () => {
+      const [osInfo] = await Promise.all([detectOS(), refreshLatestDesktopUrls()]);
 
-  document.addEventListener("DOMContentLoaded", async () => {
-    const osInfo = await detectOS();
-    const downloadUrl = RUSTDESK_DOWNLOADS[osInfo.key] || RUSTDESK_DOWNLOADS.fallback;
+      const pageTitle = document.getElementById("page-title");
+      const pageSubtitle = document.getElementById("page-subtitle");
+      const osBadge = document.getElementById("os-badge");
+      const manualContainer = document.getElementById("manual-container");
+      const link = document.getElementById("rustdesk-link");
 
-    const osBadge = document.getElementById("os-badge");
-    const link = document.getElementById("rustdesk-link");
+      if (osInfo.key === "mobile") {
+        pageTitle.innerText = "Acesse pelo seu Computador";
+        pageSubtitle.innerText = "O atendimento remoto é realizado exclusivamente em computadores e notebooks (Windows, Mac ou Linux). Abra o site wylln.github.io no computador que precisa de suporte.";
+        osBadge.classList.add("warning");
+        osBadge.innerText = "⚠️ Acesso via celular detectado — Sem versão mobile";
+        manualContainer.innerHTML = 'Caso queira transferir o instalador para o PC depois, escolha o sistema do seu computador abaixo:';
+        return;
+      }
 
-    osBadge.innerText = `✓ Versão identificada para ${osInfo.name}`;
-    link.href = downloadUrl;
+      const downloadUrl = RUSTDESK_DOWNLOADS[osInfo.key] || RUSTDESK_DOWNLOADS.win_x64;
+      osBadge.innerText = `✓ Versão para Computador identificada: ${osInfo.name}`;
+      link.href = downloadUrl;
 
-    // Dispara o download em segundo plano após 1.5s sem navegar para fora da página
-    setTimeout(() => {
-      const iframe = document.createElement("iframe");
-      iframe.style.display = "none";
-      iframe.src = downloadUrl;
-      document.body.appendChild(iframe);
-    }, 1500);
-  });
-</script>
+      // Dispara o download direto do instalador após 1.2s permanecendo na mesma página
+      setTimeout(() => {
+        window.location.href = downloadUrl;
+      }, 1200);
+    });
+  </script>
 </body>
 </html>
